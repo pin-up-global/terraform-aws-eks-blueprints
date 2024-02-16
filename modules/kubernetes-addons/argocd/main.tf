@@ -81,6 +81,12 @@ resource "helm_release" "argocd_application" {
     type  = "string"
   }
 
+  set {
+    name  = "destination.namespace"
+    value = each.value.namespace
+    type  = "string"
+  }
+
   values = [
     # Application ignoreDifferences
     yamlencode({
