@@ -20,7 +20,7 @@ module "kms" {
 
 module "aws_eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "v18.29.1"
+  version = "v20.8.5"
 
   create = var.create_eks
 
