@@ -4,8 +4,7 @@ data "aws_region" "current" {}
 
 data "aws_eks_cluster" "cluster" {
   count = var.create_eks ? 1 : 0
-  #name  = module.aws_eks.cluster_id
-  name  = var.cluster_name
+  name  = module.aws_eks.cluster_name
 }
 
 data "http" "eks_cluster_readiness" {
