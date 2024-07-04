@@ -1,10 +1,16 @@
 locals {
-  cluster_encryption_config = length(var.cluster_encryption_config) > 0 ? var.cluster_encryption_config : [
-    {
+#   cluster_encryption_config = length(var.cluster_encryption_config) > 0 ? var.cluster_encryption_config : [
+#     {
+#       provider_key_arn = try(module.kms[0].key_arn, var.cluster_kms_key_arn)
+#       resources        = ["secrets"]
+#     }
+#   ]
+
+  cluster_encryption_config = var.enable_cluster_encryption == true ? {
       provider_key_arn = try(module.kms[0].key_arn, var.cluster_kms_key_arn)
       resources        = ["secrets"]
-    }
-  ]
+  } : var.cluster_encryption_config
+
 }
 
 module "kms" {
@@ -73,7 +79,8 @@ module "aws_eks" {
   cloudwatch_log_group_kms_key_id        = var.cloudwatch_log_group_kms_key_id
 
   attach_cluster_encryption_policy = false
-  cluster_encryption_config        = var.enable_cluster_encryption ? local.cluster_encryption_config : []
+  create_kms_key                   = var.create_kms_key
+  cluster_encryption_config        = var.enable_cluster_encryption ? local.cluster_encryption_config : {}
   cluster_identity_providers       = var.cluster_identity_providers
 
   tags = var.tags

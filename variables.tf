@@ -138,6 +138,13 @@ variable "cluster_endpoint_public_access_cidrs" {
 #-------------------------------
 # EKS Cluster ENCRYPTION
 #-------------------------------
+
+variable "create_kms_key" {
+  description = "Controls if a KMS key for cluster encryption should be created"
+  type        = bool
+  default     = false
+}
+
 variable "cluster_kms_key_arn" {
   description = "A valid EKS Cluster KMS Key ARN to encrypt Kubernetes secrets"
   type        = string
@@ -162,13 +169,20 @@ variable "enable_cluster_encryption" {
   default     = true
 }
 
+# variable "cluster_encryption_config" {
+#   description = "Configuration block with encryption configuration for the cluster"
+#   type = list(object({
+#     provider_key_arn = string
+#     resources        = list(string)
+#   }))
+#   default = []
+# }
 variable "cluster_encryption_config" {
-  description = "Configuration block with encryption configuration for the cluster"
-  type = list(object({
-    provider_key_arn = string
-    resources        = list(string)
-  }))
-  default = []
+  description = "Configuration block with encryption configuration for the cluster. To disable secret encryption, set this value to `{}`"
+  type        = any
+  default = {
+    resources = ["secrets"]
+  }
 }
 
 #-------------------------------
