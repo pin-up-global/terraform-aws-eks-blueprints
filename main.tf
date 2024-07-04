@@ -5,6 +5,7 @@ locals {
 #       resources        = ["secrets"]
 #     }
 #   ]
+  #value = var.my_var == null ? true : false
 
   cluster_encryption_config = var.enable_cluster_encryption == true ? {
       provider_key_arn = try(module.kms[0].key_arn, var.cluster_kms_key_arn)
