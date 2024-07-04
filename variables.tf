@@ -138,18 +138,17 @@ variable "cluster_endpoint_public_access_cidrs" {
 #-------------------------------
 # EKS Cluster ENCRYPTION
 #-------------------------------
-
 variable "create_kms_key" {
   description = "Controls if a KMS key for cluster encryption should be created"
   type        = bool
   default     = false
 }
 
-variable "cluster_kms_key_arn" {
-  description = "A valid EKS Cluster KMS Key ARN to encrypt Kubernetes secrets"
-  type        = string
-  default     = null
-}
+# variable "cluster_kms_key_arn" {
+#   description = "A valid EKS Cluster KMS Key ARN to encrypt Kubernetes secrets"
+#   type        = string
+#   default     = null
+# }
 
 variable "cluster_kms_key_deletion_window_in_days" {
   description = "The waiting period, specified in number of days (7 - 30). After the waiting period ends, AWS KMS deletes the KMS key"
@@ -163,11 +162,11 @@ variable "cluster_kms_key_additional_admin_arns" {
   default     = []
 }
 
-variable "enable_cluster_encryption" {
-  description = "Determines whether cluster encryption is enabled"
-  type        = bool
-  default     = true
-}
+# variable "enable_cluster_encryption" {
+#   description = "Determines whether cluster encryption is enabled"
+#   type        = bool
+#   default     = true
+# }
 
 # variable "cluster_encryption_config" {
 #   description = "Configuration block with encryption configuration for the cluster"

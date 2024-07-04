@@ -5,29 +5,29 @@ locals {
 #       resources        = ["secrets"]
 #     }
 #   ]
-  #value = var.my_var == null ? true : false
 
-  cluster_encryption_config = var.enable_cluster_encryption == true ? {
-      provider_key_arn = try(module.kms[0].key_arn, var.cluster_kms_key_arn)
-      resources        = ["secrets"]
-  } : var.cluster_encryption_config
 
+#   cluster_encryption_config = length(var.cluster_encryption_config) > 0  ? {
+#       provider_key_arn = try(module.kms[0].key_arn, var.cluster_kms_key_arn)
+#       resources        = ["secrets"]
+#   } : var.cluster_encryption_config
+    #create_kms_key = length(var.cluster_encryption_config) > 0 ? false : true
 }
 
-output "cluster_encryption_config" {
-  value = local.cluster_encryption_config
-}
+# output "cluster_encryption_config" {
+#   value = local.cluster_encryption_config
+# }
 
-module "kms" {
-  count  = var.create_eks && var.cluster_kms_key_arn == null && var.enable_cluster_encryption ? 1 : 0
-  source = "./modules/aws-kms"
-
-  alias                   = "alias/${var.cluster_name}"
-  description             = "${var.cluster_name} EKS cluster secret encryption key"
-  policy                  = data.aws_iam_policy_document.eks_key.json
-  deletion_window_in_days = var.cluster_kms_key_deletion_window_in_days
-  tags                    = var.tags
-}
+# module "kms" {
+#   count  = var.create_eks && var.cluster_kms_key_arn == null && var.enable_cluster_encryption ? 1 : 0
+#   source = "./modules/aws-kms"
+#
+#   alias                   = "alias/${var.cluster_name}"
+#   description             = "${var.cluster_name} EKS cluster secret encryption key"
+#   policy                  = data.aws_iam_policy_document.eks_key.json
+#   deletion_window_in_days = var.cluster_kms_key_deletion_window_in_days
+#   tags                    = var.tags
+# }
 
 module "aws_eks" {
   source  = "terraform-aws-modules/eks/aws"
@@ -85,7 +85,8 @@ module "aws_eks" {
 
   attach_cluster_encryption_policy = false
   create_kms_key                   = var.create_kms_key
-  cluster_encryption_config        = var.enable_cluster_encryption ? local.cluster_encryption_config : {}
+  #cluster_encryption_config        = var.enable_cluster_encryption ? local.cluster_encryption_config : {}
+  cluster_encryption_config        = var.cluster_encryption_config
   cluster_identity_providers       = var.cluster_identity_providers
 
   tags = var.tags
