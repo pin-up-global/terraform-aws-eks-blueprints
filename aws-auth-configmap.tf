@@ -31,5 +31,5 @@ resource "kubernetes_config_map" "aws_auth" {
   }
 
   #depends_on = [module.aws_eks.cluster_id, data.http.eks_cluster_readiness[0]]
-  depends_on = [module.aws_eks.cluster_name, data.http.eks_cluster_readiness[0]]
+  depends_on = [module.aws_eks.cluster_name, data.http.eks_cluster_readiness[0], module.aws_eks_managed_node_groups]
 }
