@@ -4,18 +4,13 @@ data "aws_region" "current" {}
 
 # data "aws_eks_cluster" "cluster" {
 #   count = var.create_eks ? 1 : 0
-#   name  = var.cluster_name
-# }
-# data "aws_eks_cluster" "cluster" {
-#   count = var.create_eks ? 1 : 0
-#   #name  = module.aws_eks.cluster_id
-#   name  = module.aws_eks.cluster_name
-#   #name = try(module.aws_eks.cluster_id, module.aws_eks.cluster_name)
+#   name  = module.aws_eks.cluster_id
 # }
 
 data "aws_eks_cluster" "cluster" {
   count = var.create_eks ? 1 : 0
   name = var.cluster_name
+
   depends_on = [
     module.aws_eks.cluster_name
   ]
