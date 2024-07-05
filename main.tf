@@ -103,7 +103,8 @@ module "emr_on_eks" {
   }
 
   emr_on_eks_teams              = each.value
-  eks_cluster_id                = module.aws_eks.cluster_id
+  #eks_cluster_id                = module.aws_eks.cluster_id
+  eks_cluster_id                = module.aws_eks.cluster_name
   iam_role_permissions_boundary = var.iam_role_permissions_boundary
   tags                          = var.tags
 
@@ -122,7 +123,8 @@ resource "kubernetes_config_map" "amazon_vpc_cni" {
   }
 
   depends_on = [
-    module.aws_eks.cluster_id,
+    #module.aws_eks.cluster_id,
+    module.aws_eks.cluster_name,
     data.http.eks_cluster_readiness[0]
   ]
 }
@@ -137,7 +139,8 @@ module "aws_eks_teams" {
   application_teams             = var.application_teams
   platform_teams                = var.platform_teams
   iam_role_permissions_boundary = var.iam_role_permissions_boundary
-  eks_cluster_id                = module.aws_eks.cluster_id
+  #eks_cluster_id                = module.aws_eks.cluster_id
+  eks_cluster_id                = module.aws_eks.cluster_name
   tags                          = var.tags
 
   depends_on = [

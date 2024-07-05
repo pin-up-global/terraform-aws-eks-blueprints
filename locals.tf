@@ -74,7 +74,8 @@ locals {
   # Self Managed node IAM Roles for aws-auth
   self_managed_node_group_aws_auth_config_map = length(var.self_managed_node_groups) > 0 ? [
     for key, node in var.self_managed_node_groups : {
-      rolearn : try(node.iam_role_arn, "arn:${local.context.aws_partition_id}:iam::${local.context.aws_caller_identity_account_id}:role/${module.aws_eks.cluster_id}-${node.node_group_name}")
+      #rolearn : try(node.iam_role_arn, "arn:${local.context.aws_partition_id}:iam::${local.context.aws_caller_identity_account_id}:role/${module.aws_eks.cluster_id}-${node.node_group_name}")
+      rolearn : try(node.iam_role_arn, "arn:${local.context.aws_partition_id}:iam::${local.context.aws_caller_identity_account_id}:role/${module.aws_eks.cluster_name}-${node.node_group_name}")
       username : "system:node:{{EC2PrivateDNSName}}"
       groups : [
         "system:bootstrappers",
@@ -86,7 +87,8 @@ locals {
   # Self Managed Windows node IAM Roles for aws-auth
   windows_node_group_aws_auth_config_map = length(var.self_managed_node_groups) > 0 && var.enable_windows_support ? [
     for key, node in var.self_managed_node_groups : {
-      rolearn : "arn:${local.context.aws_partition_id}:iam::${local.context.aws_caller_identity_account_id}:role/${module.aws_eks.cluster_id}-${node.node_group_name}"
+      #rolearn : "arn:${local.context.aws_partition_id}:iam::${local.context.aws_caller_identity_account_id}:role/${module.aws_eks.cluster_id}-${node.node_group_name}"
+      rolearn : "arn:${local.context.aws_partition_id}:iam::${local.context.aws_caller_identity_account_id}:role/${module.aws_eks.cluster_name}-${node.node_group_name}"
       username : "system:node:{{EC2PrivateDNSName}}"
       groups : [
         "system:bootstrappers",
@@ -99,7 +101,8 @@ locals {
   # Fargate node IAM Roles for aws-auth
   fargate_profiles_aws_auth_config_map = length(var.fargate_profiles) > 0 ? [
     for key, node in var.fargate_profiles : {
-      rolearn : try(node.iam_role_arn, "arn:${local.context.aws_partition_id}:iam::${local.context.aws_caller_identity_account_id}:role/${module.aws_eks.cluster_id}-${node.fargate_profile_name}")
+      #rolearn : try(node.iam_role_arn, "arn:${local.context.aws_partition_id}:iam::${local.context.aws_caller_identity_account_id}:role/${module.aws_eks.cluster_id}-${node.fargate_profile_name}")
+      rolearn : try(node.iam_role_arn, "arn:${local.context.aws_partition_id}:iam::${local.context.aws_caller_identity_account_id}:role/${module.aws_eks.cluster_name}-${node.fargate_profile_name}")
       username : "system:node:{{SessionName}}"
       groups : [
         "system:bootstrappers",
@@ -125,7 +128,8 @@ locals {
   # TODO - move this into `aws-eks-teams` to avoid getting out of sync
   platform_teams_config_map = length(var.platform_teams) > 0 ? [
     for platform_team_name, platform_team_data in var.platform_teams : {
-      rolearn : "arn:${local.partition}:iam::${local.account_id}:role/${module.aws_eks.cluster_id}-${platform_team_name}-access"
+      #rolearn : "arn:${local.partition}:iam::${local.account_id}:role/${module.aws_eks.cluster_id}-${platform_team_name}-access"
+      rolearn : "arn:${local.partition}:iam::${local.account_id}:role/${module.aws_eks.cluster_name}-${platform_team_name}-access"
       username : platform_team_name
       groups : [
         "system:masters"
@@ -136,7 +140,8 @@ locals {
   # TODO - move this into `aws-eks-teams` to avoid getting out of sync
   application_teams_config_map = length(var.application_teams) > 0 ? [
     for team_name, team_data in var.application_teams : {
-      rolearn : "arn:${local.partition}:iam::${local.account_id}:role/${module.aws_eks.cluster_id}-${team_name}-access"
+      #rolearn : "arn:${local.partition}:iam::${local.account_id}:role/${module.aws_eks.cluster_id}-${team_name}-access"
+      rolearn : "arn:${local.partition}:iam::${local.account_id}:role/${module.aws_eks.cluster_name}-${team_name}-access"
       username : team_name
       groups : [
         "${team_name}-group"
