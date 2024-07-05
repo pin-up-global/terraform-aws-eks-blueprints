@@ -10,7 +10,7 @@ data "aws_eks_cluster" "cluster" {
   count = var.create_eks ? 1 : 0
   #name  = module.aws_eks.cluster_id
   #name  = module.aws_eks.cluster_name
-  name = var.cluster_name
+  name = try(module.aws_eks.cluster_id, module.aws_eks.cluster_name)
 }
 
 data "http" "eks_cluster_readiness" {
