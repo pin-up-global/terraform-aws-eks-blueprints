@@ -11,6 +11,10 @@ data "aws_eks_cluster" "cluster" {
   #name  = module.aws_eks.cluster_id
   name  = module.aws_eks.cluster_name
   #name = try(module.aws_eks.cluster_id, module.aws_eks.cluster_name)
+
+  depends_on = [
+    data.http.eks_cluster_readiness[0]
+  ]
 }
 
 data "http" "eks_cluster_readiness" {
