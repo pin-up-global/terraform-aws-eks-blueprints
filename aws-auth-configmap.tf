@@ -1,3 +1,13 @@
+provider "kubernetes" {
+  host                   = module.aws_eks.cluster_endpoint
+  cluster_ca_certificate = base64decode(module.aws_eks.cluster_certificate_authority_data)
+  token                  = data.aws_eks_cluster_auth.this.token
+}
+
+data "aws_eks_cluster_auth" "this" {
+  name = module.aws_eks.cluster_name
+}
+
 resource "kubernetes_config_map" "aws_auth" {
   count = var.create_eks ? 1 : 0
 
