@@ -8,7 +8,8 @@ output "eks_cluster_arn" {
 
 output "eks_cluster_id" {
   description = "Amazon EKS Cluster Name"
-  value       = module.aws_eks.cluster_id
+  #value       = module.aws_eks.cluster_id
+  value       = module.aws_eks.cluster_name
 }
 
 output "eks_cluster_certificate_authority_data" {
