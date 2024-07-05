@@ -39,7 +39,8 @@ output "eks_oidc_provider_arn" {
 
 output "configure_kubectl" {
   description = "Configure kubectl: make sure you're logged in with the correct AWS profile and run the following command to update your kubeconfig"
-  value       = "aws eks --region ${local.context.aws_region_name} update-kubeconfig --name ${module.aws_eks.cluster_id}"
+  #value       = "aws eks --region ${local.context.aws_region_name} update-kubeconfig --name ${module.aws_eks.cluster_id}"
+  value       = "aws eks --region ${local.context.aws_region_name} update-kubeconfig --name ${module.aws_eks.cluster_name}"
 }
 
 output "eks_cluster_status" {

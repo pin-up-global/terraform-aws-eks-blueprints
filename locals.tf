@@ -11,7 +11,8 @@ locals {
     aws_partition_dns_suffix = data.aws_partition.current.dns_suffix
   }
 
-  eks_cluster_id     = module.aws_eks.cluster_id
+  #eks_cluster_id     = module.aws_eks.cluster_id
+  eks_cluster_id     = module.aws_eks.cluster_name
   cluster_ca_base64  = module.aws_eks.cluster_certificate_authority_data
   cluster_endpoint   = module.aws_eks.cluster_endpoint
   vpc_id             = var.vpc_id
