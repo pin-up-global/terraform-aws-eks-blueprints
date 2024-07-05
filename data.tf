@@ -6,7 +6,7 @@ data "aws_region" "current" {}
 #   count = var.create_eks ? 1 : 0
 #   name  = var.cluster_name
 # }
-data "aws_eks_cluster" "cluster" {
+data "aws_eks_cluster" "cluster666" {
   count = var.create_eks ? 1 : 0
   name  = module.aws_eks.cluster_id
 }
