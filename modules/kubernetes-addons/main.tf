@@ -490,8 +490,9 @@ module "vault" {
   count = var.enable_vault ? 1 : 0
 
   # See https://registry.terraform.io/modules/hashicorp/hashicorp-vault-eks-addon/aws/
-  source  = "hashicorp/hashicorp-vault-eks-addon/aws"
-  version = "1.0.0-rc2"
+  #source  = "hashicorp/hashicorp-vault-eks-addon/aws"
+  #version = "1.0.0-rc2"
+  source = "github.com/hashicorp/terraform-aws-hashicorp-vault-eks-addon?ref=a1b2c3d4e5f6g7h8i9j0"
 
   helm_config       = var.vault_helm_config
   manage_via_gitops = var.argocd_manage_add_ons

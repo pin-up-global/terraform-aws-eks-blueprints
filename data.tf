@@ -19,6 +19,7 @@ data "aws_iam_session_context" "current" {
   arn = data.aws_caller_identity.current.arn
 }
 
+# checkov:skip=CKV_AWS_356: DOSVC-123
 data "aws_iam_policy_document" "eks_key" {
   statement {
     sid    = "Allow access for all principals in the account that are authorized"

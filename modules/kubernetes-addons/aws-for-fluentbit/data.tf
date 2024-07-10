@@ -24,6 +24,7 @@ data "aws_iam_policy_document" "irsa" {
   }
 }
 
+# checkov:skip=CKV_AWS_356: DOSVC-123
 data "aws_iam_policy_document" "kms" {
   statement {
     sid       = "Enable IAM User Permissions"

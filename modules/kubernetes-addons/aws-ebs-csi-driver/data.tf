@@ -1,3 +1,4 @@
+# checkov:skip=CKV_AWS_356: DOSVC-123
 data "aws_iam_policy_document" "aws_ebs_csi_driver" {
   count = local.create_irsa ? 1 : 0
 

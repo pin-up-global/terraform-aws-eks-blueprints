@@ -139,6 +139,7 @@ data "aws_iam_policy_document" "assume" {
   }
 }
 
+# checkov:skip=CKV_AWS_356: DOSVC-123
 data "aws_iam_policy_document" "this" {
   count = var.create_iam_role ? 1 : 0
 

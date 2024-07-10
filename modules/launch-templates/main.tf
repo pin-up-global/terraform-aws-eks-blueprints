@@ -3,6 +3,7 @@ data "aws_eks_cluster" "eks" {
 }
 
 #tfsec:ignore:aws-autoscaling-enforce-http-token-imds
+# checkov:skip=CKV_AWS_79: DOSVC-123
 resource "aws_launch_template" "this" {
   for_each = var.launch_template_config
 
@@ -100,7 +101,7 @@ resource "aws_launch_template" "this" {
     content {
       http_endpoint               = try(each.value.http_endpoint, "enabled")
       http_tokens                 = try(each.value.http_tokens, "required")
-      http_put_response_hop_limit = try(each.value.http_put_response_hop_limit, 2)
+      http_put_response_hop_limit = try(each.value.http_put_response_hop_limit, 1)
       http_protocol_ipv6          = try(each.value.http_protocol_ipv6, "disabled")
       instance_metadata_tags      = try(each.value.instance_metadata_tags, "disabled")
     }

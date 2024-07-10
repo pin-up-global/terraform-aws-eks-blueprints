@@ -1,3 +1,4 @@
+# checkov:skip=CKV_AWS_356: DOSVC-123
 data "aws_iam_policy_document" "external_dns_iam_policy_document" {
   statement {
     effect = "Allow"

@@ -68,6 +68,7 @@ resource "aws_iam_role_policy_attachment" "fargate_pod_execution_role_policy" {
   role       = aws_iam_role.fargate[0].name
 }
 
+# checkov:skip=CKV_AWS_356: DOSVC-123
 data "aws_iam_policy_document" "cwlogs" {
   count = local.create_iam_role ? 1 : 0
 

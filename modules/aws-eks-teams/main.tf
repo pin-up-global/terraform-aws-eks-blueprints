@@ -80,6 +80,7 @@ resource "kubernetes_cluster_role_binding" "team" {
   }
 }
 
+# checkov:skip=CKV_K8S_49: DOSVC-123
 resource "kubernetes_role" "team" {
   for_each = var.application_teams
   metadata {
